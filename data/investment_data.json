@@ -5,15 +5,15 @@
     "category": "Semiconductor",
     "type": "股票分析",
     "sentiment": "bullish",
-    "summary": "全球先進製程領導者，2026年預計2nm產能放量，AI晶片需求強勁。營收成長強勁，毛利率維持高檔。",
-    "entry": "延均線操作",
-    "target": "持續上調",
-    "stopLoss": "季線支撐",
-    "focus": "2nm 良率與客戶導入進度、資本支出、CoWoS 產能擴充進度。",
+    "summary": "AI 晶片龍頭，2025Q4 獲利創高。目前創高後回測 10 日線，多頭結構穩健，2nm 長線動能強勁。",
+    "entry": "1735 - 1750",
+    "target": "1820 / 2000",
+    "stopLoss": "1710",
+    "focus": "2nm 良率、美國關稅政策、CoWoS 產能與法人賣壓何時收斂。",
     "strategies": [
-      { "period": "短期 (1-3個月)", "action": "強勢順勢操作", "monitor": "月營收報告、AI 晶片大廠訂單消息" },
-      { "period": "中期 (6-12個月)", "action": "積極持有", "monitor": "2nm 良率與客戶導入進度、資本支出" },
-      { "period": "長期 (1年以上)", "action": "長期成長股", "monitor": "地緣政治風險、Intel/Samsung 競爭狀況" }
+      { "period": "短期 (1-3個月)", "action": "拉回即買點", "monitor": "10日線/月線支撐、外資買點恢復" },
+      { "period": "中期 (6-12個月)", "action": "積極持有", "monitor": "2nm 客戶導入進度、季度毛利率變化" },
+      { "period": "長期 (1年以上)", "action": "標配核心股", "monitor": "地緣政治變化、美日歐建廠量產進度" }
     ]
   },
   {
@@ -21,16 +21,16 @@
     "stockName": "緯創",
     "category": "Server",
     "type": "股票分析",
-    "sentiment": "bullish",
-    "summary": "成功轉型為AI伺服器供應商，擺脫低毛利代工。2025-2026 AI伺服器營收佔比大幅提升。",
-    "entry": "回測支撐",
-    "target": "波段前高",
-    "stopLoss": "季線",
-    "focus": "AI 伺服器市場競爭狀況、毛利率提升幅度、新產能開出進度。",
+    "sentiment": "bearish",
+    "summary": "AI 伺服器代工大廠。短期技術面極度弱勢，跌破所有均線且 KD 低檔鈍化，籌碼面法人同步調節，需待止穩。",
+    "entry": "等待 125 附近打底",
+    "target": "140 / 155",
+    "stopLoss": "124",
+    "focus": "AI 營收佔比、毛利率回升速度、競爭對手獲利狀況。",
     "strategies": [
-      { "period": "短期 (1-3個月)", "action": "等待回檔/技術性操作", "monitor": "伺服器出貨量、法人籌碼鬆動情況" },
-      { "period": "中期 (6-12個月)", "action": "波段操作", "monitor": "毛利率提升幅度、新產能開出進度" },
-      { "period": "長期 (1年以上)", "action": "成長觀察", "monitor": "AI 伺服器產業競爭格局、雲端大廠資本支出" }
+      { "period": "短期 (1-3個月)", "action": "保守觀望", "monitor": "KD 脫離低檔區、法人是否轉買" },
+      { "period": "中期 (6-12個月)", "action": "波段操作", "monitor": "新產能貢獻、伺服器晶片供貨狀況" },
+      { "period": "長期 (1年以上)", "action": "分批佈局", "monitor": "AI 伺服器市場份額、長期毛利結構優化" }
     ]
   },
   {
@@ -38,16 +38,16 @@
     "stockName": "元大台灣50",
     "category": "ETF",
     "type": "ETF",
-    "sentiment": "bullish",
-    "summary": "追蹤台股前50大市值公司，與大盤連動高。受惠於整體經濟成長與AI產業帶動。",
-    "entry": "區間/拉回",
-    "target": "隨大盤創高",
-    "stopLoss": "長期持有",
-    "focus": "台灣半導體全球市佔率變化、外資動向。",
+    "sentiment": "neutral",
+    "summary": "台灣最具代表性的市值型 ETF。近期受外資大幅賣超影響，股價跌破短線支撐，但長期持有成本因費用率調降而具吸引力。",
+    "entry": "71.5 - 72.3 區間",
+    "target": "74.5 / 77.0",
+    "stopLoss": "71.0",
+    "focus": "外資買賣超動能、台積電 (2330) 財報展望、除息後填息力道。",
     "strategies": [
-      { "period": "短期 (1-3個月)", "action": "區間操作/逢低佈局", "monitor": "大盤成交量、外資買賣超" },
-      { "period": "中期 (6-12個月)", "action": "定期定額/波段持有", "monitor": "台灣出口數據、美聯準會利率政策" },
-      { "period": "長期 (1年以上)", "action": "核心持股", "monitor": "台灣半導體全球市佔率變化" }
+      { "period": "短期 (1-3個月)", "action": "逢回支撐佈局", "monitor": "EMA 20 守穩情況、外資調節速度" },
+      { "period": "中期 (6-12個月)", "action": "定期定額/持股觀望", "monitor": "台灣出口數據、美國降息節奏" },
+      { "period": "長期 (1年以上)", "action": "核心配置", "monitor": "台灣半導體產業全球地位、ETF 持有成本" }
     ]
   }
 ]
