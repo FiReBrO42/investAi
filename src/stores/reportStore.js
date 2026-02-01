@@ -16,7 +16,7 @@ export const useReportStore = defineStore('report', () => {
     loading.value = true
     error.value = null
     try {
-      const response = await fetch('/api/reports.json')
+      const response = await fetch('api/reports.json')
       if (!response.ok) throw new Error('Failed to fetch reports')
       reports.value = await response.json()
     } catch (err) {

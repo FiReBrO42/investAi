@@ -32,7 +32,7 @@ function scanDirectory(dir) {
             
             // Construct a relative path for frontend to fetch
             // e.g., /data/Semiconductor/2330/20260201.md
-            const relativePath = '/data/' + path.relative(DATA_DIR, filePath).replace(/\\/g, '/');
+            const relativePath = 'data/' + path.relative(DATA_DIR, filePath).replace(/\\/g, '/');
             
             results.push({
                 ...data,
