@@ -48,17 +48,33 @@
   </div>
 </template>
 
-<script setup>
 import { ref, onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
+import { useReportStore } from '@/stores/reportStore';
 import NavBar from '@/components/NavBar.vue';
 import MarkdownViewer from '@/components/MarkdownViewer.vue';
 
 const route = useRoute();
+const store = useReportStore();
 const loading = ref(true);
 const error = ref(null);
 const reportContent = ref('');
-const meta = ref({});
+
+const meta = computed(() => {
+    // Find metadata from store based on path or ID
+    const path = route.query.path;
+    const item = store.reports.find(r => r.filePath === path);
+    if (item) return item;
+    
+    // Fallback to route params
+    return {
+        category: route.params.category || 'N/A',
+        id: route.params.stockId || 'N/A',
+        stockName: route.params.stockId || 'Unknown',
+        date: 'Loading...',
+        sentiment: 'bullish'
+    };
+});
 
 const markdownBody = computed(() => {
     return reportContent.value;
@@ -72,42 +88,25 @@ onMounted(async () => {
         return;
     }
 
+    // Ensure store is loaded
+    if (store.reports.length === 0) {
+        await store.fetchReports();
+    }
+
     try {
         const res = await fetch(path);
         if (!res.ok) throw new Error('報告載入失敗');
         const text = await res.text();
         
-        // Manual frontmatter parsing if gray-matter fails or just to be safe/lightweight
-        // Simple regex for yaml frontmatter
+        // Manual frontmatter stripping
         const protect = /^---[\r\n\s\S]*?---[\r\n]+/;
         const match = text.match(protect);
         
         if (match) {
             reportContent.value = text.replace(match[0], '');
-            // We could parse the frontmatter, but we also have metadata passed via route or we can assume store has it.
-            // Better to use the store to get "Complete" metadata if needed, 
-            // but here we just display what we have or rely on what's in the text.
-            // Let's try to extract basic meta from text if we really want, or fallback to route params.
-            // Route params: category, stockId.
-            // We can assume the JSON index data is the source of truth for "meta" header display.
-            
-            // To be robust: fetch metadata from store if not present
         } else {
             reportContent.value = text;
         }
-
-        // Initialize display meta from route params + reasonable defaults
-        meta.value = {
-            category: route.params.category,
-            id: route.params.stockId,
-            stockName: route.params.stockId === '2330' ? '台積電' : (route.params.stockId === '0050' ? '元大台灣50' : '緯創'), // Fallback map or fetch from store
-            date: '2026-02-01', // Should fetch from store or file
-            sentiment: 'bullish'
-        };
-        
-        // If we want real metadata, we should find it in the store based on ID/Path
-        // But for now this is enough for display.
-        
     } catch (err) {
         error.value = err.message;
     } finally {
