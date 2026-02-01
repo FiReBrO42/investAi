@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>investAi - 智能投資分析儀表板</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap"
+		rel="stylesheet">
+	<link rel="stylesheet" href="style.css">
+	<!-- 使用 FontAwesome 顯示圖標 -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+
+<body>
+	<div class="app-container">
+		<!-- 頂部導航與標題 -->
+		<header class="glass-header">
+			<div class="logo-section">
+				<div class="logo-icon"><i class="fa-solid fa-chart-line"></i></div>
+				<h1>investAi <span class="subtitle">智能投資分析庫</span></h1>
+			</div>
+			<div class="user-profile">
+				<span class="analyst-badge">市場分析師</span>
+				<i class="fa-solid fa-circle-user"></i>
+			</div>
+		</header>
+
+		<main>
+			<!-- 搜尋與篩選區塊 -->
+			<section class="filter-section glass-panel">
+				<div class="filter-header">
+					<h2><i class="fa-solid fa-filter"></i> 報表檢索</h2>
+					<p>搜尋歷史分析報告與技術指標數據</p>
+				</div>
+				<div class="filter-controls">
+					<div class="input-group">
+						<label for="category-select"><i class="fa-solid fa-layer-group"></i> 市場分類</label>
+						<select id="category-select">
+							<option value="all">所有市場</option>
+							<option value="ETF">ETF (0050)</option>
+							<option value="Semiconductor">半導體 (2330)</option>
+							<option value="Server">AI 伺服器 (3231)</option>
+						</select>
+					</div>
+
+					<div class="input-group">
+						<label for="stock-id"><i class="fa-solid fa-magnifying-glass"></i> 股票代碼/名稱</label>
+						<input type="text" id="stock-id" placeholder="例如: 2330 或 台積電">
+					</div>
+
+					<!-- 日期篩選先保留 HTML 但 JS 邏輯已簡化 -->
+					<div class="input-group">
+						<label for="date-start"><i class="fa-regular fa-calendar"></i> 開始日期</label>
+						<input type="date" id="date-start">
+					</div>
+
+					<div class="input-group">
+						<label for="date-end"><i class="fa-regular fa-calendar"></i> 結束日期</label>
+						<input type="date" id="date-end">
+					</div>
+
+					<div class="filter-actions">
+						<button id="search-btn" class="btn-primary">搜尋</button>
+						<button id="reset-btn" class="btn-secondary">重置</button>
+					</div>
+				</div>
+			</section>
+
+			<!-- 數據展示區塊 -->
+			<section class="results-section">
+				<div class="results-header">
+					<h3>分析報告列表</h3>
+					<span class="result-count">共找到 <span id="count">0</span> 筆資料</span>
+				</div>
+
+				<!-- 這裡將由 JS 動態填充 -->
+				<div class="cards-grid" id="report-grid">
+					<!-- Cards will be injected here -->
+				</div>
+			</section>
+		</main>
+	</div>
+
+	<!-- 詳細報告 Modal -->
+	<div id="report-modal" class="modal-overlay">
+		<div class="modal-content glass-panel">
+			<div class="modal-header">
+				<h2 id="modal-title">報告標題</h2>
+				<button class="close-btn" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+			</div>
+			<div class="modal-body">
+				<div class="modal-section">
+					<h3><i class="fa-solid fa-crosshairs"></i> 關注焦點</h3>
+					<p id="modal-focus">重點摘要...</p>
+				</div>
+				<div class="modal-section">
+					<h3><i class="fa-solid fa-chess-board"></i> 投資策略建議</h3>
+					<div class="strategy-table-container">
+						<table class="strategy-table">
+							<thead>
+								<tr>
+									<th>期間</th>
+									<th>策略</th>
+									<th>關注指標</th>
+								</tr>
+							</thead>
+							<tbody id="modal-strategy-body">
+								<!-- 動態填入 -->
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="script.js"></script>
+</body>
+
+</html>

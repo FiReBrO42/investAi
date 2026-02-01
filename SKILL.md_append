@@ -1,0 +1,48 @@
+
+### 6. 投資數據管理 ("整理分析資料")
+當用戶要求「整理分析資料」時，需遵循以下 SOP 進行檔案管理與網頁整合：
+
+1.  **資料夾結構**:
+    必須按照 `類別 > 股票代碼 > 日期.md` 的層級建立資料夾與檔案。
+    ```text
+    data/
+      └── {Category} (例如: TW, US, ETF, Semiconductor)
+          └── {StockID} (例如: 0050, 2330)
+              └── {YYYYMMDD}.md (例如: 20260201.md)
+    ```
+
+2.  **MD 檔案格式**:
+    每個日報表 (`.md`) 必須包含 YAML Frontmatter，以便後續程式讀取與整合至 JSON。
+    ```markdown
+    ---
+    id: "{StockID}"
+    stockName: "{StockName}"
+    category: "{Category}"
+    type: "股票分析"
+    sentiment: "{bullish|bearish|neutral}"
+    date: "{YYYY-MM-DD}"
+    entry: "{進場價位}"
+    target: "{目標價位}"
+    stopLoss: "{止損價位}"
+    focus: "{關注焦點摘要}"
+    ---
+
+    # {StockName} ({StockID}) 投資分析報告
+
+    ## 摘要
+    {Summary Content}
+
+    ## 投資策略
+    | 期間 | 策略建議 | 關注焦點 |
+    | :--- | :--- | :--- |
+    | 短期 (1-3個月) | {ShortTermStrategy} | {ShortTermMonitor} |
+    | 中期 (6-12個月) | {MidTermStrategy} | {MidTermMonitor} |
+    | 長期 (1年以上) | {LongTermStrategy} | {LongTermMonitor} |
+    ```
+
+3.  **整合至 Web JSON**:
+    建立 MD 檔案後，**必須** 更新 `data/investment_data.json` 檔案。
+    -   讀取最新的 `.md` 資料。
+    -   將 Frontmatter 與策略表格內容轉換為 JSON Object。
+    -   更新至 `investment_data.json` 陣列中 (若 ID 相同則覆蓋)。
+    -   確保 Web 前端 (`index.html`) 能讀取到最新數據。

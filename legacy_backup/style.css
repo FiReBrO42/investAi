@@ -266,6 +266,52 @@ button {
 	align-items: center;
 	margin-bottom: 1.5rem;
 	padding: 0 10px;
+	flex-wrap: wrap;
+	gap: 15px;
+}
+
+.header-left {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	flex-wrap: wrap;
+}
+
+/* Category Chips */
+.category-filters {
+	display: flex;
+	gap: 8px;
+}
+
+.category-chip {
+	cursor: pointer;
+	user-select: none;
+}
+
+.category-chip input {
+	display: none;
+}
+
+.category-chip span {
+	display: inline-block;
+	padding: 6px 14px;
+	background: transparent;
+	border: 1px solid var(--border-color);
+	border-radius: 20px;
+	color: var(--text-muted);
+	font-size: 0.8rem;
+	transition: all 0.2s ease;
+}
+
+.category-chip input:checked+span {
+	background: rgba(0, 229, 255, 0.1);
+	border-color: var(--primary-color);
+	color: var(--primary-color);
+}
+
+.category-chip:hover span {
+	border-color: var(--text-muted);
+	color: var(--text-main);
 }
 
 .result-count {
