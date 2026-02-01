@@ -48,6 +48,18 @@ export const useReportStore = defineStore('report', () => {
         if (!matchName && !matchId) return false
       }
 
+      // Date Range Filter
+      if (dateRange.value.start) {
+          const reportDate = new Date(report.date);
+          const startDate = new Date(dateRange.value.start);
+          if (reportDate < startDate) return false;
+      }
+      if (dateRange.value.end) {
+          const reportDate = new Date(report.date);
+          const endDate = new Date(dateRange.value.end);
+          if (reportDate > endDate) return false;
+      }
+
       return true
     })
   })

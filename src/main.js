@@ -4,6 +4,7 @@ import PrimeVue from 'primevue/config'
 import Aura from '@primevue/themes/aura'
 import router from './router'
 import './style.css'
+import 'animate.css'
 import App from './App.vue'
 
 const app = createApp(App)

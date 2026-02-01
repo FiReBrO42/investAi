@@ -5,7 +5,8 @@
     <main class="flex-grow container mx-auto px-4 py-8 sm:px-6 lg:px-8 max-w-7xl">
       <!-- Header Section -->
       <div class="mb-10 text-center space-y-4">
-        <h2 class="text-4xl font-extrabold tracking-tight sm:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-400">
+        <h2
+          class="text-4xl font-extrabold tracking-tight sm:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-400">
           市場分析報告
         </h2>
         <p class="max-w-2xl mx-auto text-lg text-slate-600 dark:text-slate-400">
@@ -14,33 +15,37 @@
       </div>
 
       <!-- Controls -->
-      <div class="mb-8 flex flex-col md:flex-row gap-4 justify-between items-center bg-white dark:bg-zinc-900 p-4 rounded-2xl shadow-sm border border-slate-100 dark:border-zinc-800">
-        <!-- Search -->
-        <div class="relative w-full md:w-96 group">
-          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <i class="pi pi-search text-slate-400 group-focus-within:text-indigo-500 transition-colors"></i>
+      <div
+        class="mb-8 flex flex-col md:flex-row gap-4 justify-between items-center bg-white dark:bg-zinc-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-zinc-800 animate__animated animate__fadeInUp">
+        <div class="flex flex-col md:flex-row gap-4 w-full">
+          <!-- Search -->
+          <div class="relative flex-grow group">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <i class="pi pi-search text-slate-400 group-focus-within:text-indigo-500 transition-colors"></i>
+            </div>
+            <input v-model="store.searchQuery" type="text"
+              class="block w-full pl-10 pr-3 py-2.5 border border-slate-200 dark:border-zinc-700 rounded-xl leading-5 bg-slate-50 dark:bg-zinc-800 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-shadow"
+              placeholder="搜尋股票代號或名稱 (例如: 2330)">
           </div>
-          <input 
-            v-model="store.searchQuery"
-            type="text" 
-            class="block w-full pl-10 pr-3 py-2.5 border border-slate-200 dark:border-zinc-700 rounded-xl leading-5 bg-slate-50 dark:bg-zinc-800 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-shadow"
-            placeholder="搜尋股票代號或名稱 (例如: 2330)"
-          >
+
+          <!-- Date Filters -->
+          <div class="flex items-center gap-2">
+            <input type="date" v-model="store.dateRange.start"
+              class="px-3 py-2 bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
+            <span class="text-slate-400">-</span>
+            <input type="date" v-model="store.dateRange.end"
+              class="px-3 py-2 bg-slate-50 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
+          </div>
         </div>
 
         <!-- Filter -->
-        <div class="flex items-center gap-4 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
-          <button 
-            v-for="cat in store.uniqueCategories" 
-            :key="cat"
-            @click="store.selectedCategory = cat"
-            :class="[
-              'px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap',
-              store.selectedCategory === cat 
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-200 dark:shadow-indigo-900' 
-                : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-zinc-800 dark:text-slate-300 dark:hover:bg-zinc-700'
-            ]"
-          >
+        <div class="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0 scrollbar-hide">
+          <button v-for="cat in store.uniqueCategories" :key="cat" @click="store.selectedCategory = cat" :class="[
+            'px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 whitespace-nowrap',
+            store.selectedCategory === cat
+              ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200 dark:shadow-indigo-900/50 scale-105'
+              : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-zinc-800 dark:text-slate-300 dark:hover:bg-zinc-700'
+          ]">
             {{ cat === 'all' ? '全部' : cat }}
           </button>
         </div>
@@ -62,12 +67,8 @@
       </div>
 
       <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <ReportCard 
-          v-for="report in store.filteredReports" 
-          :key="report.id" 
-          :report="report" 
-          @click="openReport(report)"
-        />
+        <ReportCard v-for="report in store.filteredReports" :key="report.id" :report="report"
+          @click="openReport(report)" />
       </div>
     </main>
   </div>
@@ -88,17 +89,17 @@ onMounted(() => {
 });
 
 function openReport(report) {
-    // Navigate to report view
-    router.push({
-        name: 'report',
-        params: {
-            category: report.category,
-            stockId: report.id,
-            reportId: report.filePath.split('/').pop().replace('.md', '') || 'index' // extract filename as ID if needed
-        },
-        query: {
-            path: report.filePath
-        }
-    });
+  // Navigate to report view
+  router.push({
+    name: 'report',
+    params: {
+      category: report.category,
+      stockId: report.id,
+      reportId: report.filePath.split('/').pop().replace('.md', '') || 'index' // extract filename as ID if needed
+    },
+    query: {
+      path: report.filePath
+    }
+  });
 }
 </script>
