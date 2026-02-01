@@ -1,5 +1,10 @@
 <template>
-  <div class="markdown-body prose prose-slate dark:prose-invert max-w-none hover:prose-a:text-indigo-500 prose-img:rounded-xl" v-html="renderedContent"></div>
+  <div class="markdown-body prose prose-slate dark:prose-invert max-w-none 
+    prose-headings:font-bold prose-headings:text-slate-900 dark:prose-headings:text-white
+    prose-p:text-slate-600 dark:prose-p:text-slate-300
+    prose-a:text-indigo-600 dark:prose-a:text-indigo-400 hover:prose-a:text-indigo-500
+    prose-strong:text-slate-900 dark:prose-strong:text-white
+    prose-img:rounded-2xl prose-img:shadow-lg" v-html="renderedContent"></div>
 </template>
 
 <script setup>
@@ -28,15 +33,19 @@ const renderedContent = computed(() => {
 <style>
 /* Add any custom markdown styles here if Tailwind Typography isn't enough */
 .markdown-body table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 1rem 0;
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
 }
-.markdown-body th, .markdown-body td {
-    border: 1px solid #e2e8f0;
-    padding: 0.5rem;
+
+.markdown-body th,
+.markdown-body td {
+  border: 1px solid #e2e8f0;
+  padding: 0.5rem;
 }
-.dark .markdown-body th, .dark .markdown-body td {
-    border-color: #3f3f46;
+
+.dark .markdown-body th,
+.dark .markdown-body td {
+  border-color: #3f3f46;
 }
 </style>
