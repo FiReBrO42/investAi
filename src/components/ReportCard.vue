@@ -1,28 +1,40 @@
 <template>
-
-  <div class="mb-4">
-    <div class="flex items-center gap-2 mb-2">
-      <span class="text-xs font-medium px-2 py-1 rounded bg-zinc-100 text-zinc-600 dark:bg-zinc-700 dark:text-zinc-300">
-        {{ report.category }}
-      </span>
-      <span :class="sentimentClass" class="text-xs font-medium px-2 py-1 rounded">
-        {{ sentimentLabel }}
-      </span>
+  <div
+    class="group block bg-white dark:bg-zinc-900 rounded-2xl shadow-sm hover:shadow-xl hover:shadow-indigo-500/10 border border-slate-100 dark:border-zinc-800 p-6 transition-all duration-500 hover:-translate-y-2 animate__animated animate__fadeIn cursor-pointer"
+    @click="$emit('click')">
+    <div class="flex justify-between items-start mb-4">
+      <div class="flex items-center gap-2">
+        <span
+          class="px-3 py-1 bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 text-xs font-bold rounded-full border border-indigo-100 dark:border-indigo-800 group-hover:bg-indigo-600 group-hover:text-white transition-colors duration-300">
+          {{ report.category }}
+        </span>
+        <span :class="sentimentClass" class="text-xs font-bold px-3 py-1 rounded-full border">
+          {{ sentimentLabel }}
+        </span>
+      </div>
+      <span class="text-xs text-slate-400 font-medium font-mono">{{ report.date }}</span>
     </div>
-    <p class="text-zinc-600 dark:text-zinc-300 text-sm line-clamp-3 leading-relaxed">
+
+    <h3
+      class="text-lg font-bold text-slate-900 dark:text-white mb-3 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+      {{ report.stockName }} <span class="text-slate-400 text-sm font-normal">({{ report.id }})</span>
+    </h3>
+
+    <p class="text-slate-600 dark:text-slate-400 text-sm line-clamp-3 leading-relaxed mb-4">
       {{ report.summary || '點擊查看詳細分析報告...' }}
     </p>
-  </div>
 
-  <div class="flex items-center justify-between mt-auto pt-4 border-t border-zinc-100 dark:border-zinc-700">
-    <div class="text-xs text-zinc-500">
-      <span class="font-semibold">策略:</span> {{ report.entry || 'N/A' }}
+    <div class="flex items-center justify-between mt-4 pt-4 border-t border-slate-50 dark:border-zinc-800">
+      <div class="text-xs text-slate-500 flex items-center gap-1">
+        <i class="pi pi-tag text-[10px]"></i>
+        <span class="font-semibold text-slate-400">進入點:</span>
+        <span class="text-slate-700 dark:text-slate-300">{{ report.entry || '分析中' }}</span>
+      </div>
+      <div
+        class="text-indigo-600 dark:text-indigo-400 text-sm font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+        閱讀詳情 <i class="pi pi-chevron-right text-[10px]"></i>
+      </div>
     </div>
-    <button class="text-indigo-600 dark:text-indigo-400 text-sm font-medium hover:underline flex items-center gap-1">
-      閱讀更多 <i class="pi pi-arrow-right text-xs"></i>
-    </button>
-  </div>
-  </div>
   </div>
 </template>
 
@@ -44,7 +56,7 @@ const sentimentLabel = computed(() => {
 
 const sentimentClass = computed(() => {
   return props.report.sentiment === 'bullish'
-    ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' // 台股紅是漲
-    : 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+    ? 'bg-red-50 text-red-600 border-red-100 dark:bg-red-900/20 dark:text-red-400 dark:border-red-900/50'
+    : 'bg-green-50 text-green-600 border-green-100 dark:bg-green-900/20 dark:text-green-400 dark:border-green-900/50'
 })
 </script>
