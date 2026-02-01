@@ -39,6 +39,10 @@
 </template>
 
 <script setup>
+/**
+ * 報告卡片組件
+ * 展示報告摘要、分類、股票代號及多空情緒
+ */
 import { computed } from 'vue';
 
 const props = defineProps({

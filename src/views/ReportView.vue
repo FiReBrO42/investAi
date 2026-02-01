@@ -16,41 +16,58 @@
             </div>
 
             <!-- Content -->
-            <article v-else-if="reportContent"
-                class="bg-white dark:bg-zinc-900 shadow-sm rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800 animate__animated animate__fadeIn">
-                <!-- Header -->
-                <div class="px-8 py-6 border-b border-zinc-100 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50">
-                    <div class="flex items-center gap-2 mb-4 text-sm text-zinc-500">
-                        <span class="cursor-pointer hover:text-indigo-500 transition-colors"
-                            @click="$router.push('/')">首頁</span>
-                        <i class="pi pi-angle-right text-xs"></i>
-                        <span>{{ meta.category }}</span>
-                        <i class="pi pi-angle-right text-xs"></i>
-                        <span>{{ meta.stockName }} ({{ meta.id }})</span>
-                    </div>
-
-                    <h1 class="text-3xl font-bold text-zinc-900 dark:text-white mb-2">{{ meta.id }} {{ meta.stockName }}
-                        投資分析報告</h1>
-                    <div class="flex items-center gap-4 text-sm text-zinc-500">
-                        <span class="flex items-center gap-1"><i class="pi pi-calendar"></i> {{ meta.date }}</span>
-                        <span
-                            :class="meta.sentiment === 'bullish' ? 'text-red-500 bg-red-50 px-2 py-0.5 rounded' : 'text-green-500 bg-green-50 px-2 py-0.5 rounded'"
-                            class="flex items-center gap-1 font-medium">
-                            {{ meta.sentiment === 'bullish' ? '看多' : '看空' }}
-                        </span>
-                    </div>
+            <template v-else-if="reportContent">
+                <div class="mb-4">
+                    <button @click="$router.push('/')"
+                        class="group flex items-center gap-2 px-3 py-1.5 -ml-3 rounded-lg text-zinc-500 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-all font-medium active:scale-95">
+                        <i class="pi pi-arrow-left group-hover:-translate-x-1 transition-transform"></i>
+                        返回報告列表
+                    </button>
                 </div>
 
-                <!-- Body -->
-                <div class="p-8">
-                    <MarkdownViewer :content="markdownBody" />
-                </div>
-            </article>
+                <article
+                    class="bg-white dark:bg-zinc-900 shadow-sm rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800 animate__animated animate__fadeIn">
+                    <!-- Header -->
+                    <div
+                        class="px-8 py-6 border-b border-zinc-100 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50">
+                        <div class="flex items-center gap-2 mb-4 text-sm text-zinc-500">
+                            <span
+                                class="cursor-pointer hover:text-indigo-500 hover:underline transition-all underline-offset-4"
+                                @click="$router.push('/')">首頁</span>
+                            <i class="pi pi-angle-right text-xs"></i>
+                            <span>{{ meta.category }}</span>
+                            <i class="pi pi-angle-right text-xs"></i>
+                            <span>{{ meta.stockName }} ({{ meta.id }})</span>
+                        </div>
+
+                        <h1 class="text-3xl font-bold text-zinc-900 dark:text-white mb-2">{{ meta.id }} {{
+                            meta.stockName }}
+                            投資分析報告</h1>
+                        <div class="flex items-center gap-4 text-sm text-zinc-500">
+                            <span class="flex items-center gap-1"><i class="pi pi-calendar"></i> {{ meta.date }}</span>
+                            <span
+                                :class="meta.sentiment === 'bullish' ? 'text-red-500 bg-red-50 px-2 py-0.5 rounded' : 'text-green-500 bg-green-50 px-2 py-0.5 rounded'"
+                                class="flex items-center gap-1 font-medium">
+                                {{ meta.sentiment === 'bullish' ? '看多' : '看空' }}
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Body -->
+                    <div class="p-8">
+                        <MarkdownViewer :content="markdownBody" />
+                    </div>
+                </article>
+            </template>
         </main>
     </div>
 </template>
 
 <script setup>
+/**
+ * 報告詳情視圖
+ * 根據路由參數載入對應的 Markdown 文件，並呈現詳細內容
+ */
 import { ref, onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { useReportStore } from '@/stores/reportStore';

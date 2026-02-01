@@ -39,12 +39,12 @@
         </div>
 
         <!-- Filter -->
-        <div class="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0 scrollbar-hide">
+        <div class="flex flex-wrap items-center gap-3 w-full">
           <button v-for="cat in store.uniqueCategories" :key="cat" @click="store.selectedCategory = cat" :class="[
-            'px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 whitespace-nowrap',
+            'px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 whitespace-nowrap active:scale-95',
             store.selectedCategory === cat
-              ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200 dark:shadow-indigo-900/50 scale-105'
-              : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-zinc-800 dark:text-slate-300 dark:hover:bg-zinc-700'
+              ? 'bg-indigo-600 text-white shadow-xl shadow-indigo-200 dark:shadow-indigo-900/40 scale-105'
+              : 'bg-slate-100 text-slate-600 hover:bg-white hover:shadow-lg hover:shadow-slate-200 dark:bg-zinc-800 dark:text-slate-300 dark:hover:bg-zinc-700 dark:hover:shadow-black/50'
           ]">
             {{ cat === 'all' ? '全部' : cat }}
           </button>
@@ -75,6 +75,10 @@
 </template>
 
 <script setup>
+/**
+ * 首頁視圖 (報告列表)
+ * 負責展示所有投資報告，並提供分類、搜尋與日期篩選功能
+ */
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useReportStore } from '@/stores/reportStore';

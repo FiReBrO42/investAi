@@ -8,12 +8,16 @@
 </template>
 
 <script setup>
+/**
+ * Markdown 渲染組件
+ * 使用 markdown-it 定義渲染規則，並搭配 Tailwind Typography (prose) 進行排版
+ */
 import { computed } from 'vue';
 import MarkdownIt from 'markdown-it';
 
 const props = defineProps({
   content: {
-    type: String,
+    type: String, // Markdown 格式的字串內容
     required: true
   }
 })
