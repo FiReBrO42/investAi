@@ -1,0 +1,41 @@
+[
+  {
+    "id": "0050",
+    "stockName": "元大台灣50",
+    "category": "ETF",
+    "type": "ETF",
+    "sentiment": "bullish",
+    "date": "2026-02-01",
+    "entry": "區間/拉回",
+    "target": "隨大盤創高",
+    "stopLoss": "長期持有",
+    "focus": "台灣半導體全球市佔率變化、外資動向。",
+    "filePath": "/data/ETF/0050/20260201.md"
+  },
+  {
+    "id": "2330",
+    "stockName": "台積電",
+    "category": "Semiconductor",
+    "type": "股票分析",
+    "sentiment": "bullish",
+    "date": "2026-02-01",
+    "entry": "延均線操作",
+    "target": "持續上調",
+    "stopLoss": "季線支撐",
+    "focus": "2nm 良率與客戶導入進度、資本支出、CoWoS 產能擴充進度。",
+    "filePath": "/data/Semiconductor/2330/20260201.md"
+  },
+  {
+    "id": "3231",
+    "stockName": "緯創",
+    "category": "Server",
+    "type": "股票分析",
+    "sentiment": "bullish",
+    "date": "2026-02-01",
+    "entry": "回測支撐",
+    "target": "波段前高",
+    "stopLoss": "季線",
+    "focus": "AI 伺服器市場競爭狀況、毛利率提升幅度、新產能開出進度。",
+    "filePath": "/data/Server/3231/20260201.md"
+  }
+]
