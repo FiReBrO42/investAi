@@ -50,6 +50,7 @@
     </div>
 </template>
 
+<script setup>
 import { ref, onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { useReportStore } from '@/stores/reportStore';
@@ -63,56 +64,56 @@ const error = ref(null);
 const reportContent = ref('');
 
 const meta = computed(() => {
-// Find metadata from store based on path or ID
-const path = route.query.path;
-const item = store.reports.find(r => r.filePath === path);
-if (item) return item;
+    // Find metadata from store based on path or ID
+    const path = route.query.path;
+    const item = store.reports.find(r => r.filePath === path);
+    if (item) return item;
 
-// Fallback to route params
-return {
-category: route.params.category || 'N/A',
-id: route.params.stockId || 'N/A',
-stockName: route.params.stockId || 'Unknown',
-date: 'Loading...',
-sentiment: 'bullish'
-};
+    // Fallback to route params
+    return {
+        category: route.params.category || 'N/A',
+        id: route.params.stockId || 'N/A',
+        stockName: route.params.stockId || 'Unknown',
+        date: 'Loading...',
+        sentiment: 'bullish'
+    };
 });
 
 const markdownBody = computed(() => {
-return reportContent.value;
+    return reportContent.value;
 })
 
 onMounted(async () => {
-const path = route.query.path;
-if (!path) {
-error.value = '無效的報告路徑';
-loading.value = false;
-return;
-}
+    const path = route.query.path;
+    if (!path) {
+        error.value = '無效的報告路徑';
+        loading.value = false;
+        return;
+    }
 
-// Ensure store is loaded
-if (store.reports.length === 0) {
-await store.fetchReports();
-}
+    // Ensure store is loaded
+    if (store.reports.length === 0) {
+        await store.fetchReports();
+    }
 
-try {
-const res = await fetch(path);
-if (!res.ok) throw new Error('報告載入失敗');
-const text = await res.text();
+    try {
+        const res = await fetch(path);
+        if (!res.ok) throw new Error('報告載入失敗');
+        const text = await res.text();
 
-// Manual frontmatter stripping
-const protect = /^---[\r\n\s\S]*?---[\r\n]+/;
-const match = text.match(protect);
+        // Manual frontmatter stripping
+        const protect = /^---[\r\n\s\S]*?---[\r\n]+/;
+        const match = text.match(protect);
 
-if (match) {
-reportContent.value = text.replace(match[0], '');
-} else {
-reportContent.value = text;
-}
-} catch (err) {
-error.value = err.message;
-} finally {
-loading.value = false;
-}
+        if (match) {
+            reportContent.value = text.replace(match[0], '');
+        } else {
+            reportContent.value = text;
+        }
+    } catch (err) {
+        error.value = err.message;
+    } finally {
+        loading.value = false;
+    }
 });
 </script>
