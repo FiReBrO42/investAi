@@ -114,7 +114,8 @@ onMounted(async () => {
     }
 
     try {
-        const res = await fetch(path);
+        const fullPath = `${import.meta.env.BASE_URL}${path}`;
+        const res = await fetch(fullPath);
         if (!res.ok) throw new Error('報告載入失敗');
         const text = await res.text();
 

@@ -23,7 +23,7 @@ export const useReportStore = defineStore('report', () => {
     loading.value = true
     error.value = null
     try {
-      const response = await fetch('api/reports.json')
+      const response = await fetch(`${import.meta.env.BASE_URL}api/reports.json`)
       if (!response.ok) throw new Error('無法取得報告清單')
       reports.value = await response.json()
     } catch (err) {

@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
-const DATA_DIR = path.resolve('data');
+const DATA_DIR = path.resolve('public/data');
 const OUTPUT_DIR = path.resolve('public/api');
 const OUTPUT_FILE = path.join(OUTPUT_DIR, 'reports.json');
 
