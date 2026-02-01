@@ -5,6 +5,7 @@ const MOCK_DATA = [
         date: "2023-10-25",
         stockId: "2330",
         stockName: "台積電",
+        category: "TW",
         type: "股票分析",
         sentiment: "bullish",
         summary: "台積電 Q3 法說會優於預期，先進封裝產能持續擴充。技術面站上月線，MACD 黃金交叉，展現多頭排列氣勢。",
@@ -17,6 +18,7 @@ const MOCK_DATA = [
         date: "2023-10-26",
         stockId: "3231",
         stockName: "緯創",
+        category: "TW",
         type: "指標搭配",
         sentiment: "neutral",
         summary: "目前股價在布林通道中軌震盪，RSI 指數 50 附近徘徊。建議等待突破方向明確後再進行操作，需留意法人籌碼動向。",
@@ -29,6 +31,7 @@ const MOCK_DATA = [
         date: "2023-10-24",
         stockId: "2603",
         stockName: "長榮",
+        category: "TW",
         type: "ATR計算",
         sentiment: "bearish",
         summary: "受到全球運價指數下跌影響，股價呈現弱勢整理。ATR 顯示波動率放大，建議嚴格執行止損，目前空方勢力較強。",
@@ -41,6 +44,7 @@ const MOCK_DATA = [
         date: "2023-10-27",
         stockId: "2454",
         stockName: "聯發科",
+        category: "TW",
         type: "股票分析",
         sentiment: "bullish",
         summary: "新一代旗艦晶片發表，市場反應熱烈。股價強勢突破前高，成交量溫和放大，小週期 EMA 黃金交叉支撐強勁。",
@@ -53,12 +57,39 @@ const MOCK_DATA = [
         date: "2023-10-23",
         stockId: "0050",
         stockName: "元大台灣50",
+        category: "ETF",
         type: "期貨/指數",
         sentiment: "neutral",
         summary: "跟隨加權指數區間震盪，外資期貨空單未明顯回補。建議區間操作，下檔季線有強支撐。",
         entry: "125",
         target: "130",
         stopLoss: "122"
+    },
+    {
+        id: "R006",
+        date: "2023-10-28",
+        stockId: "AAPL",
+        stockName: "Apple",
+        category: "US",
+        type: "股票分析",
+        sentiment: "bullish",
+        summary: "新品發布會後股價回穩，受服務營收增長帶動。技術面站上季線，適合波段操作。",
+        entry: "175",
+        target: "190",
+        stopLoss: "168"
+    },
+    {
+        id: "R007",
+        date: "2023-10-28",
+        stockId: "BTC",
+        stockName: "Bitcoin",
+        category: "Crypto",
+        type: "趨勢分析",
+        sentiment: "bullish",
+        summary: "受現貨 ETF 申請消息激勵，突破 35k 關卡，多頭動能強勁。",
+        entry: "34500",
+        target: "38000",
+        stopLoss: "33000"
     }
 ];
 
@@ -67,6 +98,7 @@ const reportGrid = document.getElementById('report-grid');
 const searchBtn = document.getElementById('search-btn');
 const resetBtn = document.getElementById('reset-btn');
 const stockInput = document.getElementById('stock-id');
+// const categorySelect = document.getElementById('category-select'); // Removed
 const startDateInput = document.getElementById('date-start');
 const endDateInput = document.getElementById('date-end');
 const countLabel = document.getElementById('count');
@@ -74,12 +106,21 @@ const countLabel = document.getElementById('count');
 // 初始化
 document.addEventListener('DOMContentLoaded', () => {
     // 預設填入一些日期範圍 (選用)
+    
+    // 預設排序：最新到最舊
+    MOCK_DATA.sort((a, b) => new Date(b.date) - new Date(a.date));
+
     // 渲染所有資料
     renderCards(MOCK_DATA);
 
     // 綁定事件
     searchBtn.addEventListener('click', handleSearch);
     resetBtn.addEventListener('click', handleReset);
+    
+    // 監聽 Checkbox 變更即時搜尋
+    document.querySelectorAll('.category-chip input').forEach(cb => {
+        cb.addEventListener('change', handleSearch);
+    });
     
     // 支援 Enter 鍵搜尋
     stockInput.addEventListener('keypress', (e) => {
@@ -92,22 +133,33 @@ document.addEventListener('DOMContentLoaded', () => {
  */
 function handleSearch() {
     const stockQuery = stockInput.value.trim().toLowerCase();
+    
+    // 取得所有勾選的分類
+    const checkedCategories = Array.from(document.querySelectorAll('.category-chip input:checked'))
+                                   .map(cb => cb.value);
+
     const startDate = startDateInput.value;
     const endDate = endDateInput.value;
 
     const filtered = MOCK_DATA.filter(item => {
         // 股票代碼或名稱篩選
         const matchStock = stockQuery === '' || 
-                           item.stockId.includes(stockQuery) || 
-                           item.stockName.includes(stockQuery);
+                           item.stockId.toLowerCase().includes(stockQuery) || 
+                           item.stockName.toLowerCase().includes(stockQuery);
         
+        // 分類篩選: 若該項目的分類在勾選清單中，則保留
+        const matchCategory = checkedCategories.includes(item.category);
+
         // 日期篩選
         let matchDate = true;
         if (startDate && item.date < startDate) matchDate = false;
         if (endDate && item.date > endDate) matchDate = false;
 
-        return matchStock && matchDate;
+        return matchStock && matchCategory && matchDate;
     });
+
+    // 排序：最新到最舊
+    filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
 
     renderCards(filtered);
 }
@@ -117,6 +169,8 @@ function handleSearch() {
  */
 function handleReset() {
     stockInput.value = '';
+    // 重置分類：全選
+    document.querySelectorAll('.category-chip input').forEach(cb => cb.checked = true);
     startDateInput.value = '';
     endDateInput.value = '';
     renderCards(MOCK_DATA);
