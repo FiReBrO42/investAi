@@ -7,8 +7,10 @@ const OUTPUT_DIR = path.resolve('public/api');
 const OUTPUT_FILE = path.join(OUTPUT_DIR, 'reports.json');
 
 // Ensure output directory exists
-if (!fs.existsSync(OUTPUT_DIR)) {
-    fs.mkdirSync(OUTPUT_DIR, { recursive: true });
+function ensureDirectory(dir) {
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+    }
 }
 
 function scanDirectory(dir) {
@@ -47,9 +49,17 @@ function scanDirectory(dir) {
     return results;
 }
 
-console.log('Scanning data directory...');
-const reports = scanDirectory(DATA_DIR);
+export function generateReportsIndex() {
+    console.log('Scanning data directory...');
+    ensureDirectory(OUTPUT_DIR);
+    const reports = scanDirectory(DATA_DIR);
 
-console.log(`Found ${reports.length} reports.`);
-fs.writeFileSync(OUTPUT_FILE, JSON.stringify(reports, null, 2));
-console.log(`Index generated at ${OUTPUT_FILE}`);
+    console.log(`Found ${reports.length} reports.`);
+    fs.writeFileSync(OUTPUT_FILE, JSON.stringify(reports, null, 2));
+    console.log(`Index generated at ${OUTPUT_FILE}`);
+}
+
+// Run if called directly
+if (process.argv[1] === path.resolve('scripts/generate-index.js')) {
+    generateReportsIndex();
+}

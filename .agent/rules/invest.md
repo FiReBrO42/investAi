@@ -240,6 +240,25 @@ description: 股票分析師
 ---
 
 ## 8) 合規與風險聲明（固定段落，避免誤解）
-- 本內容為市場資訊整理與研究觀點，不構成任何保證獲利之投資建議。
-- 市場具有不確定性，請依自身風險承受度與資金規劃決定交易，並自負盈虧。
-- 重大事件（財報/法說/除權息/政策/地緣風險）可能造成波動放大或跳空，止損
+- 重大事件（財報/法說/除權息/政策/地緣風險）可能造成波動放大或跳空，止損需確實。
+
+---
+
+## 9) 檔案存儲與元數據規範 (Web 顯示必備)
+為確保 Web 界面正確顯示，產出的 Markdown 檔案必須包含 Frontmatter：
+
+```yaml
+---
+id: "股票代號"
+stockName: "股票名稱"
+category: "分類"
+type: "類型"
+sentiment: "positive/neutral/negative"
+date: "YYYY-MM-DD"
+entry: "進場條件"
+target: "停利目標"
+stopLoss: "止損位"
+focus: "觀察重點"
+---
+```
+檔案路徑：`public/data/{Category}/{StockID}/{YYYYMMDD}.md`
